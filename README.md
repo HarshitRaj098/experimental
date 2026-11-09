@@ -1,21 +1,35 @@
 # PyBodySwap AI
 
-Python-first full-body video replacement application scaffold.
+Python-first full-body video replacement project.
 
 ## Current status
 
-- FastAPI application and browser interface
-- Video and reference-image type validation
-- Health endpoint and interactive API docs
-- Vercel Python deployment configuration
+- FastAPI browser interface and upload validation on Vercel
+- CPU-only video analysis preview using OpenCV and MediaPipe
+- Frame-by-frame pose landmark and person-segmentation visualization
 
-**Video generation is not implemented yet.** A photorealistic full-body replacement pipeline requires pretrained model weights and sustained GPU inference. Standard Vercel Python functions are not a suitable GPU video-generation runtime. This deployment does not save uploaded media or pretend to generate output.
+**Identity/body replacement is not implemented.** The CPU script is a foundation for analysis only; it highlights the detected person and pose but does not transfer the reference image's identity, face, clothing, or body. Photorealistic full-body replacement is substantially more demanding than pose detection and cannot be honestly promised by this CPU prototype.
 
-## Run locally for development
+The Vercel deployment only hosts the interface and lightweight API. It does not process or store uploaded media. Long CPU video jobs should not run inside a standard Vercel serverless function.
+
+## Run the CPU preview
+
+Use Python 3.10 or 3.11 for the broadest dependency compatibility.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+pip install -r requirements-cpu.txt
+python cpu_pipeline.py input.mp4 --output preview.mp4
+```
+
+The output is an annotated MP4 showing pose landmarks and the estimated person-segmentation mask. It is a diagnostic preview, not a swapped video.
+
+For faster CPU processing, use `--model-complexity 0`. For a heavier pose model, use `--model-complexity 2`.
+
+## Run the web API
+
+```bash
 pip install -r requirements.txt
 uvicorn api.index:app --reload
 ```
