@@ -1,1 +1,2 @@
-fastapi>=0.115,<1.0\npython-multipart>=0.0.9,<1.0\n
+fastapi>=0.115,<1.0
+python-multipart>=0.0.9,<1.0
