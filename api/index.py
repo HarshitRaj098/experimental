@@ -33,7 +33,7 @@ PAGE = """<!doctype html>
 <body><main>
   <p>PYTHON VIDEO WORKSPACE</p>
   <h1>PyBodySwap AI</h1>
-  <p>Full-body video replacement project scaffold. Upload controls and API are deployed; the GPU generation worker is not connected yet.</p>
+  <p>Full-body video replacement project scaffold. Upload controls and API are deployed; a CPU-only video analysis preview is available as a separate Python command-line tool.</p>
   <section class="panel">
     <form id="upload-form">
       <label for="source">Source video</label>
@@ -47,7 +47,7 @@ PAGE = """<!doctype html>
   </section>
   <section class="panel note">
     <strong>Current deployment status</strong>
-    <p>This Vercel deployment hosts the Python interface and API only. Photorealistic video generation requires a separate GPU worker and cannot run reliably inside a standard Vercel Python function. This prototype does not claim to generate a swapped video.</p>
+    <p>This Vercel deployment hosts the Python interface and API only. The repository includes a CPU-only Python preview tool that detects a person's pose and segmentation mask, but it does not replace their identity. Full-body photorealistic replacement is not implemented; CPU processing is slow and standard Vercel functions are not suitable for long video jobs.</p>
   </section>
   <p><a href="/docs">Open Python API documentation</a></p>
 </main>
@@ -104,7 +104,7 @@ async def validate_files(
         "valid": True,
         "message": (
             "File types checked successfully. Generation is not enabled in this "
-            "Vercel-only deployment; no media was saved or processed."
+            "Vercel deployment; no media was saved or processed."
         ),
         "generation": "not_configured",
     }
